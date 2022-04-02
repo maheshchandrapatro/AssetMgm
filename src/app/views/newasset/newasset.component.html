@@ -1,0 +1,1465 @@
+<div class="container-fluid p-0">
+  <span class="d-block p-2 bg-dark text-white">Employee Detail</span>
+  <div class="card">
+    <div class="card-header input-container" role="tab" id="emp">
+      <div class="row form-group">
+        <label class="col-sm-2 px-4" for="exampleInputEmail1">Employee Id :</label>
+        <div class="col-sm-3 text-left">
+          <input type="text" class="form-control" name="empid" id="empid" [(ngModel)]="employeeId" required
+            [ngClass]="{'danger': (submitted && employeeId ===null)}" placeholder="Enter empid">
+        </div>
+        <div class="col-sm-1 pull-right">
+          <button type="submit" id="clilck" class="btn bg-dark text-white btn-sm form-control"
+            (click)="getEmployeeDetails()">Search</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Employee Id :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">{{employeeDetails?.employeeId}}</div>
+          </div>
+        </div>
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Employee Name :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">{{employeeDetails?.empName}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Reporting To :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">{{employeeDetails?.reportingTo}}</div>
+          </div>
+        </div>
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Department :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+
+            <div class="emp-content">{{employeeDetails?.unit}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Email :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">{{employeeDetails?.userName}}</div>
+          </div>
+        </div>
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Status :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">{{employeeDetails?.employmentStatus}}</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="d-block bg-dark d-flex justify-content-end">
+      <button class="col-sm-1 btn bg-dark text-white mx-2 add-asset-btn" (click)="createAsset()">Create Asset</button>
+      <button class="col-sm-1 btn bg-dark text-white mx-2 add-asset-btn" (click)="showAssetModal()">Show Asset</button>
+      <button class="col-sm-1 btn bg-dark text-white mx-2 add-asset-btn" (click)="toggleShow()">Assign Asset</button>
+    </div>
+
+    <div class="card">
+      <form class="form" (submit)="addAssetData(assetModel)" #assetForm="ngForm">
+        <div class="form-group ">
+          <div class="card-body" *ngIf="isShown">
+            <div class="row justify-content-between">
+              <div class="col-sm-5 form-group">
+                <label for="FormControlSelect1" style="padding-bottom: 5px;">Asset Type</label>
+                <select class="form-select" name="assetType" [(ngModel)]="assetModel.assetType"
+                  [ngModelOptions]="{standalone: true}"
+                  [ngClass]="{'danger': (submitted && assetModel.assetType ===null)}">
+                  <option [selected]="true" value="">-- Select Asset --</option>
+                  <option value="{{item.name}}" *ngFor="let item of drpAssetTypes">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+
+            <br />
+
+            <div class="col" *ngIf="assetModel.assetType=='Laptop'">
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <div class="row text-left">
+                    <label class="col-sm-3">Service Tag <span class="text-danger">
+                        *</span></label>
+                    <input type="text" class="col-sm-6" id="serviceTag" name="serviceTag" autofocus
+                      placeholder="serviceTag.." [(ngModel)]="assetModel.serviceTag"
+                      [ngClass]="{'danger': (submitted && assetModel.serviceTag ===null)}">
+
+                    <span class="col-sm-2 input-group-btn">
+                      <button class="btn bg-dark text-white btn-sm form-control" id="submit" type="button"
+                        (click)=getAssetDetails()><i class="fa fa-search fa-fw"></i> Search</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>HDD Storage </label>
+                  <input type="text" id="lname" name="hddstorag" placeholder="Enter your hdd storage" required
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.hddStorage" [disabled]="isEditable"
+                    class="form-control">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>SSD Storage</label>
+                  <input type="text" id="fname" name="SSDStorag" placeholder="Enter your ssdStorage" required
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.ssdStorage" [disabled]="isEditable"
+                    class="form-control">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Adapter</label>
+                  <input type="text" id="lname" name="Adpter" placeholder="Enter your hdd Adapter" required
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.adapter" class="form-control">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Model </label>
+                  <input type="text" id="email" name="model" placeholder="Enter Model num." required
+                    [disabled]="isEditable" [(ngModel)]="assetModel.model" class="form-control"
+                    [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Processor
+                  </label>
+                  <input type="text" id="processor" name="processor" [(ngModel)]="assetModel.processor"
+                    [disabled]="isEditable" required class="form-control" [ngModelOptions]="{standalone: true}"
+                    placeholder="processor">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty Start
+                    Date</label> <input type="text" id="job" name="warrantyStart" required
+                    [(ngModel)]="assetModel.warrantyStartDate" class="form-control" placeholder="Warranty Start"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty End
+                    Date</label> <input type="text" id="job" name="warrantyEnd" required
+                    [(ngModel)]="assetModel.warrantyEndDate" class="form-control" placeholder="Warranty End"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}"> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>DeskId
+                  </label>
+                  <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.deskId"
+                    [ngClass]="{'danger': (submitted && assetModel.deskId ===null)}" required class="form-control"
+                    [ngModelOptions]="{standalone: true}" placeholder="DeskId">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Location
+                    By</label>
+                  <select class="form-select" [(ngModel)]="assetModel.location" required class="form-control"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="Office">Office</option>
+                    <option value="Home">Home</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>CreatedBy
+                  </label>
+                  <input type="text" id="job" name="CreatedBy" [(ngModel)]="assetModel.createdBy" class="form-control"
+                    placeholder="CreatedBy" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assigned Date
+                    By</label>
+                  <input type="text" id="job" name="AssignedDate" [(ngModel)]="assetModel.assignedDate"
+                    [disabled]="isEditable" required class="form-control" [ngModelOptions]="{standalone: true}"
+                    placeholder="AssignedDate">
+                </div>
+              </div>
+            </div>
+
+            <div class="col" *ngIf="assetModel.assetType=='Desktop'">
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <div class="row text-left">
+                    <label class="col-sm-3">Service Tag <span class="text-danger">
+                        *</span></label>
+                    <input type="text" class="col-sm-6" id="serviceTag" name="Service" placeholder="serviceTag.."
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.serviceTag"
+                      [ngClass]="{'danger': (submitted && assetModel.serviceTag ===null)}">
+                    <span class="col-sm-2 input-group-btn">
+                      <button class="btn bg-dark text-white btn-sm form-control" type="button"
+                        (click)=getAssetDetails()><i class="fa fa-search fa-fw"></i> Search</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>HDD Storage </label>
+                  <input type="text" id="lname" name="hddstorag" placeholder="Enter your hdd storage"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.hddStorage"
+                    class="form-control">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>SSD Storage</label>
+                  <input type="text" id="fname" name="SSDStorag" placeholder="Enter your ssdStorage"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.ssdStorage"
+                    class="form-control">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Adapter</label>
+                  <input type="text" id="lname" name="Adpter" placeholder="Enter your hdd Adapter"
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.adapter" class="form-control">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Model</label>
+                  <input type="text" id="email" name="model" placeholder="Enter Model num." [disabled]="isEditable"
+                    [(ngModel)]="assetModel.Model" class="form-control" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Ram</label> <input type="text" id="mob"
+                    name="ram" placeholder="Ram" class="form-control" [ngModelOptions]="{standalone: true}"
+                    [disabled]="isEditable" [(ngModel)]="assetModel.ram"> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>DeskId
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.deskId"
+                    [ngClass]="{'danger': (submitted && assetModel.deskId ===null)}"
+                    [ngModelOptions]="{standalone: true}" placeholder="DeskId"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Processor
+                  </label>
+                  <input type="text" id="processor" name="processor" [(ngModel)]="assetModel.processor"
+                    [disabled]="isEditable" class="form-control" [ngModelOptions]="{standalone: true}"
+                    placeholder="processor">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty Start Date
+                  </label> <input type="text" id="job" name="warrantyStart" [(ngModel)]="assetModel.warrantyStartDate"
+                    class="form-control" placeholder="Warranty Start Date" [disabled]="isEditable"
+                    [ngModelOptions]="{standalone: true}"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty End Date
+                  </label> <input type="text" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                    [disabled]="isEditable" class="form-control" placeholder="Warranty End"
+                    [ngModelOptions]="{standalone: true}"> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>CreatedBy
+                  </label>
+                  <input type="text" id="job" name="CreatedBy" [(ngModel)]="assetModel.createdBy"
+                    [ngModelOptions]="{standalone: true}" placeholder="CreatedBy">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assigned Date
+                    By</label>
+                  <input type="text" id="job" name="AssignedDate" [(ngModel)]="assetModel.assignedDate"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="AssignedDate">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Location
+                    By</label>
+                  <select class="form-select" [(ngModel)]="assetModel.location" [ngModelOptions]="{standalone: true}"
+                    [ngClass]="{'danger': (submitted && assetModel.location === null)}">
+                    <option value="Office" [selected]="true">Office</option>
+                    <option value="home">Home</option>
+                  </select>
+                </div>
+                <!-- <div class="form-group col-sm-5 flex-column d-flex"> <label>Assignment Type</label> <input type="text"
+                  id="job" name="AssignmentType" [(ngModel)]="assetModel.AssignmentType" class="form-control"
+                  placeholder="AssignmentType" [ngModelOptions]="{standalone: true}"> </div> -->
+              </div>
+            </div>
+
+            <div class="col" *ngIf="assetModel.assetType=='Cables'">
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <div class="row text-left">
+                    <label class="col-sm-3">Service Tag <span class="text-danger">
+                        *</span></label>
+                    <input type="text" class="col-sm-6" id="serviceTag" name="Service" placeholder="serviceTag.."
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.serviceTag"
+                      [ngClass]="{'danger': (submitted && assetModel.serviceTag ===null)}">
+                    <span class="col-sm-2 input-group-btn">
+                      <button class="btn bg-dark text-white btn-sm form-control" type="button"
+                        (click)=getAssetDetails()><i class="fa fa-search fa-fw"></i> Search</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Model</label>
+                  <input type="text" id="email" name="model" placeholder="Enter Model num." [disabled]="isEditable"
+                    [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{standalone: true}">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>CreatedBy
+                  </label>
+                  <input type="text" id="CreatedBy" name="CreatedBy" [(ngModel)]="assetModel.createdBy"
+                    [ngModelOptions]="{standalone: true}" placeholder="CreatedBy">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assigned Date
+                    By</label>
+                  <input type="text" id="AssignedDate" name="AssignedDate" [(ngModel)]="assetModel.assignedDate"
+                    [disabled]="isEditable" placeholder="AssignedDate">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>DeskId
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.deskId"
+                    [ngClass]="{'danger': (submitted && assetModel.deskId ===null)}"
+                    [ngModelOptions]="{standalone: true}" placeholder="DeskId"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Location
+                  </label>
+                  <select class="form-select" [(ngModel)]="assetModel.location" [ngModelOptions]="{standalone: true}"
+                    [ngClass]="{'danger': (submitted && assetModel.location ===null)}">
+                    <option value="Office" [selected]="true">Office</option>
+                    <option value="home">Home</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Cable Details
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.cableDetails"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="CableDetails"> </div>
+              </div>
+            </div>
+
+            <div class="col" *ngIf="assetModel.assetType=='HeadPhones'">
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <div class="row text-left">
+                    <label class="col-sm-3">Service Tag <span class="text-danger">
+                        *</span></label>
+                    <input type="text" class="col-sm-6" id="serviceTag" name="Service" placeholder="serviceTag.."
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.serviceTag"
+                      [ngClass]="{'danger': (submitted && assetModel.serviceTag ===null)}">
+                    <span class="col-sm-2 input-group-btn">
+                      <button class="btn bg-dark text-white btn-sm form-control" type="button"
+                        (click)=getAssetDetails()><i class="fa fa-search fa-fw"></i> Search</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Model </label>
+                  <input type="text" id="email" name="model" placeholder="Enter Model num." [disabled]="isEditable"
+                    [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{standalone: true}">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty Start
+                    Date</label> <input type="text" id="job" name="warrantyStart"
+                    [(ngModel)]="assetModel.warrantyStartDate" class="form-control" placeholder="Warranty Start"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty End
+                    Date</label> <input type="text" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                    class="form-control" placeholder="Warranty End" [disabled]="isEditable"
+                    [ngModelOptions]="{standalone: true}"> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>CreatedBy
+                  </label>
+                  <input type="text" id="job" name="CreatedBy" [(ngModel)]="assetModel.createdBy"
+                    [ngModelOptions]="{standalone: true}" placeholder="CreatedBy">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assigned Date
+                    By</label>
+                  <input type="text" id="job" name="AssignedDate" [(ngModel)]="assetModel.assignedDate"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="AssignedDate">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>DeskId
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.deskId"
+                    [ngClass]="{'danger': (submitted && assetModel.deskId ===null)}"
+                    [ngModelOptions]="{standalone: true}" placeholder="DeskId"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Location
+                    By</label> <select class="form-select" [(ngModel)]="assetModel.location"
+                    [ngClass]="{'danger': (submitted && assetModel.location ===null)}"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="Office" [selected]="true">Office</option>
+                    <option value="home">Home</option>
+                  </select> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Headphone Details
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.headPhoneDetails"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="HeadPhone Details">
+                </div>
+              </div>
+            </div>
+
+            <div class="col" *ngIf="assetModel.assetType=='KeyBoards'">
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <div class="row text-left">
+                    <label class="col-sm-3">Service Tag <span class="text-danger">
+                        *</span></label>
+                    <input type="text" class="col-sm-6" id="serviceTag" name="Service" placeholder="serviceTag.."
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.serviceTag"
+                      [ngClass]="{'danger': (submitted && assetModel.serviceTag ===null)}">
+                    <span class="col-sm-2 input-group-btn">
+                      <button class="btn bg-dark text-white btn-sm form-control" type="button"
+                        (click)=getAssetDetails()><i class="fa fa-search fa-fw"></i> Search</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Model </label>
+                  <input type="text" id="email" name="model" placeholder="Enter Model num." [disabled]="isEditable"
+                    [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{standalone: true}">
+                </div>
+              </div>
+              <!-- <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>ID</label> <input type="text" id="id"
+                    name="id" [(ngModel)]="assetModel.id" class="form-control" placeholder="Id"
+                    [ngModelOptions]="{standalone: true}"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assignment Type</label> <input type="text"
+                    id="job" name="AssignmentType" [(ngModel)]="assetModel.AssignmentType" class="form-control"
+                    placeholder="AssignmentType" [ngModelOptions]="{standalone: true}"> </div>
+              </div> -->
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty Start
+                    Date</label> <input type="text" id="job" name="warrantyStart" [disabled]="isEditable"
+                    [(ngModel)]="assetModel.warrantyStartDate" class="form-control" placeholder="Warranty Start"
+                    [ngModelOptions]="{standalone: true}"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty End
+                    Date</label> <input type="text" id="job" name="warrantyEnd" [disabled]="isEditable"
+                    [(ngModel)]="assetModel.warrantyEndDate" class="form-control" placeholder="Warranty End"
+                    [ngModelOptions]="{standalone: true}"> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>CreatedBy
+                  </label>
+                  <input type="text" id="job" name="CreatedBy" [(ngModel)]="assetModel.createdBy"
+                    [ngModelOptions]="{standalone: true}" placeholder="CreatedBy">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assigned Date
+                    By</label>
+                  <input type="text" id="job" name="AssignedDate" [(ngModel)]="assetModel.assignedDate"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="AssignedDate">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>DeskId
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.deskId"
+                    [ngClass]="{'danger': (submitted && assetModel.deskId ===null)}"
+                    [ngModelOptions]="{standalone: true}" placeholder="DeskId"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Location
+                    By</label> <select class="form-select" [(ngModel)]="assetModel.location"
+                    [ngClass]="{'danger': (submitted && assetModel.location ===null)}"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="Office" [selected]="true">Office</option>
+                    <option value="home">Home</option>
+                  </select> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>KeyBoard Details
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.keyBoardDetails"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="KeyBoard Details">
+                </div>
+              </div>
+            </div>
+
+            <div class="col" *ngIf="assetModel.assetType=='Monitors'">
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <div class="row text-left">
+                    <label class="col-sm-3">Service Tag <span class="text-danger">
+                        *</span></label>
+                    <input type="text" class="col-sm-6" id="serviceTag" name="Service" placeholder="serviceTag.."
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.serviceTag"
+                      [ngClass]="{'danger': (submitted && assetModel.serviceTag ===null)}">
+                    <span class="col-sm-2 input-group-btn">
+                      <button class="btn bg-dark text-white btn-sm form-control" type="button"
+                        (click)=getAssetDetails()><i class="fa fa-search fa-fw"></i> Search</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Model </label>
+                  <input type="text" id="email" name="model" placeholder="Enter Model num." [disabled]="isEditable"
+                    [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{standalone: true}">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty Start
+                    Date</label> <input type="text" id="job" name="warrantyStart" [disabled]="isEditable"
+                    [(ngModel)]="assetModel.warrantyStartDate" class="form-control" placeholder="Warranty Start"
+                    [ngModelOptions]="{standalone: true}"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty End
+                    Date</label> <input type="text" id="job" name="warrantyEnd" [disabled]="isEditable"
+                    [(ngModel)]="assetModel.warrantyEndDate" class="form-control" placeholder="Warranty End"
+                    [ngModelOptions]="{standalone: true}"> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>CreatedBy
+                  </label>
+                  <input type="text" id="job" name="CreatedBy" [(ngModel)]="assetModel.createdBy"
+                    [ngModelOptions]="{standalone: true}" placeholder="CreatedBy">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assigned Date
+                    By</label>
+                  <input type="text" id="job" name="AssignedDate" [(ngModel)]="assetModel.assignedDate"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="AssignedDate">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>DeskId
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.deskId"
+                    [ngClass]="{'danger': (submitted && assetModel.deskId ===null)}"
+                    [ngModelOptions]="{standalone: true}" placeholder="DeskId"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Location
+                    By</label> <select class="form-select" [(ngModel)]="assetModel.location"
+                    [ngClass]="{'danger': (submitted && assetModel.location ===null)}"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="Office" [selected]="true">Office</option>
+                    <option value="home">Home</option>
+                  </select> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Monitors Details
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.monitorDetails"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="Monitor Details"> </div>
+              </div>
+            </div>
+
+            <div class="col" *ngIf="assetModel.assetType=='Mouse'">
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <div class="row text-left">
+                    <label class="col-sm-3">Service Tag <span class="text-danger">
+                        *</span></label>
+                    <input type="text" class="col-sm-6" id="serviceTag" name="Service" placeholder="serviceTag.."
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.serviceTag"
+                      [ngClass]="{'danger': (submitted && assetModel.serviceTag ===null)}">
+                    <span class="col-sm-2 input-group-btn">
+                      <button class="btn bg-dark text-white btn-sm form-control" type="button"
+                        (click)=getAssetDetails()><i class="fa fa-search fa-fw"></i> Search</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Model </label>
+                  <input type="text" id="email" name="model" placeholder="Enter Model num." [disabled]="isEditable"
+                    [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{standalone: true}">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty Start
+                    Date</label> <input type="text" id="job" name="warrantyStart"
+                    [(ngModel)]="assetModel.warrantyStartDate" class="form-control" placeholder="Warranty Start"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty End
+                    Date</label> <input type="text" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                    class="form-control" placeholder="Warranty End" [disabled]="isEditable"
+                    [ngModelOptions]="{standalone: true}"> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>mouseDetails
+                  </label>
+                  <input type="text" id="job" name="mouseDetails" [(ngModel)]="assetModel.mouseDetails"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="Mouse Details">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>CreatedBy
+                  </label>
+                  <input type="text" id="job" name="CreatedBy" [(ngModel)]="assetModel.createdBy"
+                    [ngModelOptions]="{standalone: true}" placeholder="CreatedBy">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assigned Date
+                    By</label>
+                  <input type="text" id="job" name="AssignedDate" [(ngModel)]="assetModel.assignedDate"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="AssignedDate">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>DeskId
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.deskId"
+                    [ngClass]="{'danger': (submitted && assetModel.deskId ===null)}"
+                    [ngModelOptions]="{standalone: true}" placeholder="DeskId"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Location
+                    By</label> <select class="form-select" [(ngModel)]="assetModel.location"
+                    [ngClass]="{'danger': (submitted && assetModel.location ===null)}"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="Office" [selected]="true">Office</option>
+                    <option value="home">Home</option>
+                  </select> </div>
+              </div>
+            </div>
+
+            <div class="col" *ngIf="assetModel.assetType=='UPS'">
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <div class="row text-left">
+                    <label class="col-sm-3">Service Tag <span class="text-danger">
+                        *</span></label>
+                    <input type="text" class="col-sm-6" id="serviceTag" name="Service" placeholder="serviceTag.."
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.serviceTag"
+                      [ngClass]="{'danger': (submitted && assetModel.serviceTag ===null)}">
+                    <span class="col-sm-2 input-group-btn">
+                      <button class="btn bg-dark text-white btn-sm form-control" type="button"
+                        (click)=getAssetDetails()><i class="fa fa-search fa-fw"></i> Search</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Model </label>
+                  <input type="text" id="email" name="model" placeholder="Enter Model num." [disabled]="isEditable"
+                    [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{standalone: true}">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty Start
+                    Date</label> <input type="text" id="job" name="warrantyStart"
+                    [(ngModel)]="assetModel.warrantyStartDate" class="form-control" placeholder="Warranty Start"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty End
+                    Date</label> <input type="text" id="job" name="warrantyEnd" [disabled]="isEditable"
+                    [(ngModel)]="assetModel.warrantyEndDate" class="form-control" placeholder="Warranty End"
+                    [ngModelOptions]="{standalone: true}"> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>CreatedBy
+                  </label>
+                  <input type="text" id="job" name="CreatedBy" [(ngModel)]="assetModel.createdBy"
+                    [ngModelOptions]="{standalone: true}" placeholder="CreatedBy">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assigned Date
+                    By</label>
+                  <input type="text" id="job" name="AssignedDate" [(ngModel)]="assetModel.assignedDate"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="AssignedDate">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>DeskId
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.deskId"
+                    [ngClass]="{'danger': (submitted && assetModel.deskId ===null)}"
+                    [ngModelOptions]="{standalone: true}" placeholder="DeskId"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Location
+                    By</label> <select class="form-select" [(ngModel)]="assetModel.location"
+                    [ngClass]="{'danger': (submitted && assetModel.location ===null)}"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="Office" [selected]="true">Office</option>
+                    <option value="home">Home</option>
+                  </select> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>UPS Details
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.upsDetails"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="Ups Details"> </div>
+              </div>
+            </div>
+
+            <div class="col" *ngIf="assetModel.assetType=='WebCams'">
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <div class="row text-left">
+                    <label class="col-sm-3">Service Tag <span class="text-danger">
+                        *</span></label>
+                    <input type="text" class="col-sm-6" id="serviceTag" name="Service" placeholder="serviceTag.."
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.serviceTag"
+                      [ngClass]="{'danger': (submitted && assetModel.serviceTag ===null)}">
+                    <span class="col-sm-2 input-group-btn">
+                      <button class="btn bg-dark text-white btn-sm form-control" type="button"
+                        (click)=getAssetDetails()><i class="fa fa-search fa-fw"></i> Search</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Model </label>
+                  <input type="text" id="email" name="model" placeholder="Enter Model num." [disabled]="isEditable"
+                    [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{standalone: true}">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty Start
+                    Date</label> <input type="text" id="job" name="warrantyStart" [disabled]="isEditable"
+                    [(ngModel)]="assetModel.warrantyStartDate" class="form-control" placeholder="Warranty Start"
+                    [ngModelOptions]="{standalone: true}"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Warranty End
+                    Date</label> <input type="text" id="job" name="warrantyEnd" [disabled]="isEditable"
+                    [(ngModel)]="assetModel.warrantyEndDate" class="form-control" placeholder="Warranty End"
+                    [ngModelOptions]="{standalone: true}"> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>CreatedBy
+                  </label>
+                  <input type="text" id="job" name="CreatedBy" [(ngModel)]="assetModel.createdBy"
+                    [ngModelOptions]="{standalone: true}" placeholder="CreatedBy">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assigned Date
+                    By</label>
+                  <input type="text" id="job" name="AssignedDate" [(ngModel)]="assetModel.assignedDate"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="AssignedDate">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>DeskId
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.deskId"
+                    [ngClass]="{'danger': (submitted && assetModel.deskId ===null)}"
+                    [ngModelOptions]="{standalone: true}" placeholder="DeskId"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Location
+                    By</label> <select class="form-select" [(ngModel)]="assetModel.location"
+                    [ngClass]="{'danger': (submitted && assetModel.location ===null)}"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="Office" [selected]="true">Office</option>
+                    <option value="home">Home</option>
+                  </select> </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Webcam Details
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.webCamDetails"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="WebCam Details"> </div>
+              </div>
+            </div>
+
+            <div class="col" *ngIf="assetModel.assetType == 'Miscellaneous'">
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <div class="row text-left">
+                    <label class="col-sm-3">Service Tag <span class="text-danger">
+                        *</span></label>
+                    <input type="text" class="col-sm-6" id="serviceTag" name="Service" placeholder="serviceTag.."
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="assetModel.serviceTag"
+                      [ngClass]="{'danger': (submitted && assetModel.serviceTag ===null)}">
+                    <span class="col-sm-2 input-group-btn">
+                      <button class="btn bg-dark text-white btn-sm form-control" type="button"
+                        (click)=getAssetDetails()><i class="fa fa-search fa-fw"></i> Search</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-5 form-group">
+                  <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Miscellaneous Assets</label>
+                  <select class="form-select" name="others" [(ngModel)]="assetModel.others" [disabled]="isEditable"
+                    [ngClass]="{
+                      danger: submitted && assetModel.others === null
+                    }" [ngModelOptions]="{ standalone: true }">
+                    <option [selected]="true" value=""> -- Select others -- </option>
+                    <option value="mobile">Mobile</option>
+                    <option value="tablet">Tablet</option>
+                    <option value="respberrypi">Raspberrypi</option>
+                    <option value="adapter">Adapter</option>
+                    <option value="printer">Printer</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Production Description</label>
+                  <input type="text" id="Description" name="Description" placeholder="Enter Prod. Desc.."
+                    [disabled]="isEditable" [(ngModel)]="assetModel.productDescription" class="form-control"
+                    [ngModelOptions]="{ standalone: true }" class="form-control" />
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Make</label>
+                  <input type="text" id="make" name="make" placeholder="Enter make num." [(ngModel)]="assetModel.make"
+                    class="form-control" [disabled]="isEditable" [ngModelOptions]="{ standalone: true }" />
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Warranty Start Date<span class="text-danger">
+                      *</span></label>
+                  <input type="text" id="warrantyStart" name="warrantyStart" [(ngModel)]="assetModel.warrantyStartDate"
+                    [disabled]="isEditable" class="form-control" placeholder="Warranty Start"
+                    [ngModelOptions]="{ standalone: true }" />
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex">
+                  <label>Warranty End Date<span class="text-danger">
+                      *</span></label>
+                  <input type="text" id="warrantyEnd" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                    [disabled]="isEditable" class="form-control" placeholder="Warranty End"
+                    [ngModelOptions]="{ standalone: true }" />
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>CreatedBy
+                  </label>
+                  <input type="text" id="job" name="CreatedBy" [(ngModel)]="assetModel.createdBy"
+                    [ngModelOptions]="{standalone: true}" placeholder="CreatedBy">
+                </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Assigned Date
+                    By</label>
+                  <input type="text" id="job" name="AssignedDate" [(ngModel)]="assetModel.assignedDate"
+                    [disabled]="isEditable" [ngModelOptions]="{standalone: true}" placeholder="AssignedDate">
+                </div>
+              </div>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>DeskId
+                  </label> <input type="text" id="job" name="deskId" [(ngModel)]="assetModel.deskId"
+                    [ngClass]="{'danger': (submitted && assetModel.deskId ===null)}"
+                    [ngModelOptions]="{standalone: true}" placeholder="DeskId"> </div>
+                <div class="form-group col-sm-5 flex-column d-flex"> <label>Location
+                    By</label> <select class="form-select" [(ngModel)]="assetModel.location"
+                    [ngClass]="{'danger': (submitted && assetModel.location ===null)}"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="Office" [selected]="true">Office</option>
+                    <option value="home">Home</option>
+                  </select> </div>
+              </div>
+            </div>
+
+            <div class="col-sm-1 Asset"> <button type="submit"
+                class="btn bg-dark text-white btn-sm form-control">Save</button> </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- show asset popup -->
+
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyleee}">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content scrol">
+        <div class="modal-header bg-dark text-white">
+          <h4 class="modal-title">Asset Details</h4>
+          <div class="col-sm-1 d-flex justify-content-end ">
+            <button type="button" class="close" (click)="closeModall()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtassetTable" -->
+            <table id="assetTable" class="table-striped table-bordered">
+              <thead style="text-align: center;">
+                <tr>
+                  <th scope="col">Asset Type</th>
+                  <th scope="col">Service Tag</th>
+                  <th scope="col">Assignment Type</th>
+                  <th scope="col">Cable</th>
+                  <th scope="col">Desk ID</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Processor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of assetData; let i = index">
+                  <td>{{ item.assetType }}</td>
+                  <td>{{ item.serviceTag }}</td>
+                  <td>{{ item.assignmentType }}</td>
+                  <td>{{ item.cableDetails }}</td>
+                  <td>{{ item.deskId }}</td>
+                  <td>{{ item.location }}</td>
+                  <td>{{ item.processor}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" (click)="closeModall()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Asset Modal popup -->
+
+  <div class="modal supreme-container" role="dialog" [ngStyle]="{ display: displayStyle }">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h4 *ngIf="!isEdit" class="modal-title">Create Asset</h4>
+          <h4 *ngIf="isEdit" class="modal-title">Edit Asset</h4>
+          <div class="col-sm-1 d-flex justify-content-end">
+            <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <form class="form-card" autocomplete="off">
+            <div class="form-group">
+              <div class="card-body">
+                <div class="row ">
+                  <div class="col-sm-3 form-group">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px; float: right;">Asset Type</label>
+                  </div>
+                  <div class="col-sm-5 form-group">
+                    <select (change)="assetTypeChanged()" class="form-select" name="assetType"
+                      [(ngModel)]="assetModel.assetType" [ngClass]="{
+                        danger: submitted && assetModel.assetType === null
+                      }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value="">
+                        -- Select Asset --
+                      </option>
+                      <option value="{{ item.name }}" *ngFor="let item of drpAssetTypes">
+                        {{ item.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <div class="col" *ngIf="assetModel.assetType == 'Laptop'">
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Service Tag <span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="Service" placeholder="Enter your serviceTag" [ngClass]="{
+                          danger: submitted && assetModel.serviceTag === null
+                        }" [(ngModel)]="assetModel.serviceTag" class="form-control" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>HDD Storage <span class="text-danger"> *</span></label>
+                    <input type="text" id="lname" name="hddstorag" placeholder="Enter your hdd storage"
+                      [(ngModel)]="assetModel.hddStorage" class="form-control" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>SSD Storage<span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="SSDStorag" placeholder="Enter your ssdStorage"
+                      [ngModelOptions]="{ standalone: true }" [(ngModel)]="assetModel.ssdStorage"
+                      class="form-control" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Adapter<span class="text-danger"> *</span></label>
+                    <input type="text" id="lname" name="Adpter" placeholder="Enter your hdd Adapter"
+                      [ngModelOptions]="{ standalone: true }" [(ngModel)]="assetModel.adapter" class="form-control" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Model <span class="text-danger"> *</span></label>
+                    <input type="text" id="email" name="model" placeholder="Enter Model num."
+                      [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Ram<span class="text-danger"> *</span></label>
+                    <input type="text" id="mob" name="ram" placeholder="Ram" class="form-control"
+                      [ngModelOptions]="{ standalone: true }" [(ngModel)]="assetModel.ram" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty Start Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyStart" [(ngModel)]="assetModel.warrantyStartDate"
+                      class="form-control" placeholder="Warranty Start" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty End Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                      class="form-control" placeholder="Warranty End" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="col-sm-6 form-group" *ngIf="isEdit">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Status</label>
+                    <select class="form-select" name="Status" [(ngModel)]="assetModel.status" [ngClass]="{
+                          danger: submitted && assetModel.status === null
+                        }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value="0"> -- Select Status -- </option>
+                      <option value="3">Condemn</option>
+                      <option value="4">Damaged</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Processor<span class="text-danger">
+                        *</span></label>
+                    <input type="text" id="processor" name="processor" [(ngModel)]="assetModel.processor"
+                      class="form-control" placeholder="processor" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col" *ngIf="assetModel.assetType == 'Desktop'">
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Service Tag <span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="Service" placeholder="Enter your serviceTag"
+                      [ngModelOptions]="{ standalone: true }" [ngClass]="{
+                          danger: submitted && assetModel.serviceTag === null
+                        }" [(ngModel)]="assetModel.serviceTag" class="form-control" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>HDD Storage <span class="text-danger"> *</span></label>
+                    <input type="text" id="lname" name="hddstorag" placeholder="Enter your hdd storage"
+                      [ngModelOptions]="{ standalone: true }" [(ngModel)]="assetModel.hddStorage"
+                      class="form-control" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>SSD Storage<span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="SSDStorag" placeholder="Enter your ssdStorage"
+                      [ngModelOptions]="{ standalone: true }" [(ngModel)]="assetModel.ssdStorage"
+                      class="form-control" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Adapter<span class="text-danger"> *</span></label>
+                    <input type="text" id="lname" name="Adpter" placeholder="Enter your hdd Adapter"
+                      [ngModelOptions]="{ standalone: true }" [(ngModel)]="assetModel.adapter" class="form-control" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Model <span class="text-danger"> *</span></label>
+                    <input type="text" id="email" name="model" placeholder="Enter Model num."
+                      [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Ram<span class="text-danger"> *</span></label>
+                    <input type="text" id="mob" name="ram" placeholder="Ram" class="form-control"
+                      [ngModelOptions]="{ standalone: true }" [(ngModel)]="assetModel.ram" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty Start Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="warrantyStart" name="warrantyStart"
+                      [(ngModel)]="assetModel.warrantyStartDate" class="form-control" placeholder="Warranty Start"
+                      [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty End Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="warrantyEnd" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                      class="form-control" placeholder="Warranty End" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="col-sm-6 form-group" *ngIf="isEdit">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Status</label>
+                    <select class="form-select" name="Status" [(ngModel)]="assetModel.status" [ngClass]="{
+                          danger: submitted && assetModel.status === null
+                        }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value="0"> -- Select Status -- </option>
+                      <option value="3">Condemn</option>
+                      <option value="4">Damaged</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Processor<span class="text-danger">
+                        *</span></label>
+                    <input type="text" id="processor" name="processor" [(ngModel)]="assetModel.processor"
+                      class="form-control" placeholder="processor" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col" *ngIf="assetModel.assetType == 'Cables'">
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Service Tag <span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="Service" placeholder="Enter your serviceTag"
+                      [ngModelOptions]="{ standalone: true }" [(ngModel)]="assetModel.serviceTag" class="form-control"
+                      [disabled]="isEdit" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Cable Details<span class="text-danger"> *</span></label>
+                    <input type="text" id="job" name="CableDetails" [(ngModel)]="assetModel.CableDetails"
+                      class="form-control" placeholder="Cable Details" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left" *ngIf="isEdit">
+                  <div class="col-sm-6 form-group">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Status</label>
+                    <select class="form-select" name="Status" [(ngModel)]="assetModel.status" [ngClass]="{
+                          danger: submitted && assetModel.status === null
+                        }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value="0"> -- Select Status -- </option>
+                      <option value="3">Condemn</option>
+                      <option value="4">Damaged</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col" *ngIf="assetModel.assetType == 'HeadPhones'">
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Service Tag <span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="Service" placeholder="Enter your serviceTag"
+                      [ngModelOptions]="{ standalone: true }" [ngClass]="{
+                          danger: submitted && assetModel.serviceTag === null
+                        }" [(ngModel)]="assetModel.serviceTag" class="form-control" [disabled]="isEdit" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Model <span class="text-danger"> *</span></label>
+                    <input type="text" id="email" name="model" placeholder="Enter Model num."
+                      [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty Start Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyStart" [(ngModel)]="assetModel.warrantyStartDate"
+                      class="form-control" placeholder="Warranty Start" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty End Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                      class="form-control" placeholder="Warranty End" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Headphone Details<span class="text-danger">
+                        *</span></label>
+                    <input type="text" id="job" name="headphone" [(ngModel)]="assetModel.headPhoneDetails"
+                      class="form-control" placeholder="Headphone Details" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left" *ngIf="isEdit">
+                  <div class="col-sm-6 form-group">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Status</label>
+                    <select class="form-select" name="Status" [(ngModel)]="assetModel.status" [ngClass]="{
+                          danger: submitted && assetModel.status === null
+                        }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value="0"> -- Select Status -- </option>
+                      <option value="3">Condemn</option>
+                      <option value="4">Damaged</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col" *ngIf="assetModel.assetType == 'KeyBoards'">
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Service Tag <span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="Service" placeholder="Enter your serviceTag"
+                      [ngModelOptions]="{ standalone: true }" [ngClass]="{
+                          danger: submitted && assetModel.serviceTag === null
+                        }" [(ngModel)]="assetModel.serviceTag" class="form-control" [disabled]="isEdit" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Model <span class="text-danger"> *</span></label>
+                    <input type="text" id="email" name="model" placeholder="Enter Model num."
+                      [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty Start Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyStart" [(ngModel)]="assetModel.warrantyStartDate"
+                      class="form-control" placeholder="Warranty Start" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty End Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                      class="form-control" placeholder="Warranty End" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>KeyBoard Details<span class="text-danger">
+                        *</span></label>
+                    <input type="text" id="job" name="KeyBoardDetails" [(ngModel)]="assetModel.keyBoardDetails"
+                      class="form-control" placeholder="KeyBoard Details" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left" *ngIf="isEdit">
+                  <div class="col-sm-6 form-group">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Status</label>
+                    <select class="form-select" name="Status" [(ngModel)]="assetModel.status" [ngClass]="{
+                          danger: submitted && assetModel.status === null
+                        }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value="0"> -- Select Status -- </option>
+                      <option value="3">Condemn</option>
+                      <option value="4">Damaged</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col" *ngIf="assetModel.assetType == 'Monitors'">
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Service Tag <span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="Service" placeholder="Enter your serviceTag"
+                      [ngModelOptions]="{ standalone: true }" [ngClass]="{
+                          danger: submitted && assetModel.serviceTag === null
+                        }" [(ngModel)]="assetModel.serviceTag" class="form-control" [disabled]="isEdit" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Model <span class="text-danger"> *</span></label>
+                    <input type="text" id="email" name="model" placeholder="Enter Model num."
+                      [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty Start Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyStart" [(ngModel)]="assetModel.warrantyStartDate"
+                      class="form-control" placeholder="Warranty Start" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty End Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                      class="form-control" placeholder="Warranty End" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Monitor Details<span class="text-danger">
+                        *</span></label>
+                    <input type="text" id="job" name="MonitorDetails" [(ngModel)]="assetModel.monitorDetails"
+                      class="form-control" placeholder="Monitor Details" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left" *ngIf="isEdit">
+                  <div class="col-sm-6 form-group">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Status</label>
+                    <select class="form-select" name="Status" [(ngModel)]="assetModel.status" [ngClass]="{
+                          danger: submitted && assetModel.status === null
+                        }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value="0"> -- Select Status -- </option>
+                      <option value="3">Condemn</option>
+                      <option value="4">Damaged</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col" *ngIf="assetModel.assetType == 'Mouse'">
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Service Tag <span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="Service" placeholder="Enter your serviceTag"
+                      [ngModelOptions]="{ standalone: true }" [ngClass]="{
+                          danger: submitted && assetModel.serviceTag === null
+                        }" [(ngModel)]="assetModel.serviceTag" class="form-control" [disabled]="isEdit" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Model <span class="text-danger"> *</span></label>
+                    <input type="text" id="email" name="model" placeholder="Enter Model num."
+                      [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty Start Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyStart" [(ngModel)]="assetModel.warrantyStartDate"
+                      class="form-control" placeholder="Warranty Start" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty End Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                      class="form-control" placeholder="Warranty End" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Mouse Details<span class="text-danger"> *</span></label>
+                    <input type="text" id="job" name="MouseDetails" [(ngModel)]="assetModel.mouseDetails"
+                      class="form-control" placeholder="Mouse Details" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left" *ngIf="isEdit">
+                  <div class="col-sm-6 form-group">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Status</label>
+                    <select class="form-select" name="Status" [(ngModel)]="assetModel.status" [ngClass]="{
+                          danger: submitted && assetModel.status === null
+                        }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value="0"> -- Select Status -- </option>
+                      <option value="3">Condemn</option>
+                      <option value="4">Damaged</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col" *ngIf="assetModel.assetType == 'UPS'">
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Service Tag <span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="Service" placeholder="Enter your serviceTag"
+                      [ngModelOptions]="{ standalone: true }" [ngClass]="{
+                          danger: submitted && assetModel.serviceTag === null
+                        }" [(ngModel)]="assetModel.serviceTag" class="form-control" [disabled]="isEdit" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Model <span class="text-danger"> *</span></label>
+                    <input type="text" id="email" name="model" placeholder="Enter Model num."
+                      [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty Start Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyStart" [(ngModel)]="assetModel.warrantyStartDate"
+                      class="form-control" placeholder="Warranty Start" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty End Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                      class="form-control" placeholder="Warranty End" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Ups Details<span class="text-danger"> *</span></label>
+                    <input type="text" id="job" name="UpsDetails" [(ngModel)]="assetModel.upsDetails"
+                      class="form-control" placeholder="Ups Details" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left" *ngIf="isEdit">
+                  <div class="col-sm-6 form-group">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Status</label>
+                    <select class="form-select" name="Status" [(ngModel)]="assetModel.status" [ngClass]="{
+                          danger: submitted && assetModel.status === null
+                        }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value="0"> -- Select Status -- </option>
+                      <option value="3">Condemn</option>
+                      <option value="4">Damaged</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col" *ngIf="assetModel.assetType == 'WebCams'">
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Service Tag <span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="Service" placeholder="Enter your serviceTag"
+                      [ngModelOptions]="{ standalone: true }" [ngClass]="{
+                          danger: submitted && assetModel.serviceTag === null
+                        }" [(ngModel)]="assetModel.serviceTag" class="form-control" [disabled]="isEdit" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Model <span class="text-danger"> *</span></label>
+                    <input type="text" id="email" name="model" placeholder="Enter Model num."
+                      [(ngModel)]="assetModel.model" class="form-control" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty Start Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyStart" [(ngModel)]="assetModel.warrantyStartDate"
+                      class="form-control" placeholder="Warranty Start" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty End Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                      class="form-control" placeholder="Warranty End" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>WebCam Details<span class="text-danger">
+                        *</span></label>
+                    <input type="text" id="job" name="WebCamDetails" [(ngModel)]="assetModel.webCamDetails"
+                      class="form-control" placeholder="WebCam Details" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left" *ngIf="isEdit">
+                  <div class="col-sm-6 form-group">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Status</label>
+                    <select class="form-select" name="Status" [(ngModel)]="assetModel.status" [ngClass]="{
+                          danger: submitted && assetModel.status === null
+                        }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value="0"> -- Select Status -- </option>
+                      <option value="3">Condemn</option>
+                      <option value="4">Damaged</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col" *ngIf="assetModel.assetType == 'Miscellaneous'">
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Service Tag <span class="text-danger"> *</span></label>
+                    <input type="text" id="fname" name="Service" placeholder="Enter your serviceTag"
+                      [ngModelOptions]="{ standalone: true }" [ngClass]="{
+                        danger: submitted && assetModel.serviceTag === null
+                      }" [(ngModel)]="assetModel.serviceTag" class="form-control" [disabled]="isEdit" />
+                  </div>
+                  <div class="col-sm-5 form-group">
+                    <label for="exampleFormControlSelect1" style="padding-bottom: 5px">Others</label>
+                    <select class="form-select" name="others" [(ngModel)]="assetModel.others" [ngClass]="{
+                        danger: submitted && assetModel.others === null
+                      }" [ngModelOptions]="{ standalone: true }">
+                      <option [selected]="true" value=""> -- Select others -- </option>
+                      <option value="mobile">Mobile</option>
+                      <option value="tablet">Tablet</option>
+                      <option value="respberrypi">Raspberrypi</option>
+                      <option value="adapter">Adapter</option>
+                      <option value="printer">Printer</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Production Description</label>
+                    <input type="text" id="Description" name="Description" placeholder="Enter Prod. Desc.."
+                      [(ngModel)]="assetModel.productDescription" class="form-control"
+                      [ngModelOptions]="{ standalone: true }" class="form-control" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Make</label>
+                    <input type="text" id="make" name="make" placeholder="Enter make num." [(ngModel)]="assetModel.make"
+                      class="form-control" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+                <div class="row justify-content-between text-left">
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty Start Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyStart" [(ngModel)]="assetModel.warrantyStartDate"
+                      class="form-control" placeholder="Warranty Start" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                  <div class="form-group col-sm-5 flex-column d-flex">
+                    <label>Warranty End Date<span class="text-danger">
+                        *</span></label>
+                    <input type="date" id="job" name="warrantyEnd" [(ngModel)]="assetModel.warrantyEndDate"
+                      class="form-control" placeholder="Warranty End" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-dark" (click)="closeModal()">Close</button>
+          <button class="btn btn-dark" (click)="saveAsset(assetModel)">Save </button>
+          <!-- <button *ngIf="isEdit" class="btn btn-dark" (click)="saveAssets(assetModel)">Update</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

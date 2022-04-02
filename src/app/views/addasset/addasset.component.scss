@@ -1,0 +1,60 @@
+table, th, td {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  border: 0px;
+}
+
+th, td {
+  padding: 5px;
+  text-align: left;
+}
+
+tr {
+  cursor: pointer;
+}
+input,label{
+  padding: 5px;
+  margin: 2px;
+}
+
+.modal-dialog{
+width: 1300px;
+height: auto;
+}
+.modal-body {
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+}
+.modal-footer{
+  padding: 0px;
+}
+.spinner {
+  margin: 0px; padding: 0px; position: fixed;
+  right: 0px; top: 0px; width: 100%; height: 100%;
+  background-color: rgb(102, 102, 102);
+  z-index: 30001; opacity: 0.8;
+}
+.spinner h5{
+  position: absolute; color: White; top: 50%; left: 45%;
+}
+table{
+  width: 100%;
+}
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+  font-size: 20px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+.modal-header {
+  padding: 5px;
+}
+table[_ngcontent-blr-c214], th[_ngcontent-blr-c214], td[_ngcontent-blr-c214] {
+  /* border: 1px solid #ccc; */
+  /* border-collapse: collapse; */
+  border: 1px solid;
+}

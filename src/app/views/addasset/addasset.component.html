@@ -1,0 +1,106 @@
+<div *ngIf="isShowLoader" class="spinner">
+  <h5 class="alert-info">Please wait......</h5>
+</div>
+<div class="container-fluid p-0">
+    <span class="d-block p-2 bg-dark text-white">Employee Assets Details</span>
+    <div class="card table-responsive">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtempTable" id="empTable" class="table table-striped"
+            width="100%">
+            <thead style="text-align: center;">
+                <tr>
+                    <th scope="col">Employee Id</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let emp of employeeDetails">
+                    <td>{{ emp.employeeId }}</td>
+                    <td>{{ emp.empName }}</td>
+                    <td>{{ emp.unit }}</td>
+                    <td>{{emp.contact}}</td>
+                    <td>{{ emp.email }}</td>
+                    <td><button type="button" class="btn btn-dark" style="text-align: center;" (click)="showEmployeeModal(emp)">View
+                        </button></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- <div class="column">
+          <ag-grid-angular style="width: 100%; height: 750px; font-size: 16px;" class="ag-theme-alpine" [pagination]="true" [paginationAutoPageSize]="true" [rowData]="rowData"
+            [rowHeight]="45" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [suppressRowClickSelection]="true" [frameworkComponents]="frameworkComponents">
+          </ag-grid-angular>
+        </div> -->
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content scrol">
+                <div class="modal-header bg-dark text-white">
+                    <h4 class="modal-title">Assigned Assets</h4>
+                    <div class="col-sm-1 d-flex justify-content-end ">
+                        <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtassetTable" -->
+                        <table id="assetTable" class="table-bordered table-striped">
+                            <thead style="text-align: center;">
+                                <tr>
+                                    <th scope="col">Asset Type</th>
+                                    <th scope="col">Service Tag</th>
+                                    <th scope="col">Assignment Type</th>
+                                    <th scope="col">Cable</th>
+                                    <th scope="col">Desk ID</th>
+                                    <th scope="col">Others</th>
+                                    <!-- <th scope="col">HDD Storage</th>
+                                <th scope="col">SSD Storage</th>
+                                <th scope="col">Model</th>
+                                <th scope="col">RAM</th>
+                                <th scope="col">Adapter</th>
+                                <th scope="col">Waranty Start Date</th>
+                                <th scope="col">Waranty End Date</th> -->
+                                    <th scope="col">Location</th>
+                                    <th>Scanned Asset</th>
+                                    <th>Verify Asset</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of assetData; let i = index">
+                                    <td>{{ item.assetType }}</td>
+                                    <td>{{ item.serviceTag }}</td>
+                                    <td>{{ item.assignmentType }}</td>
+                                    <td>{{ item.cableDetails }}</td>
+                                    <td>{{ item.deskId }}</td>
+                                    <td>{{ item.others }}</td>
+                                    <!-- <td>{{ item.HDDStorage }}</td>
+                                <td>{{ item.SSDStorage }}</td>
+                                <td>{{ item.Model }}</td>
+                                <td>{{ item.RAM }}</td>
+                                <td>{{ item.Adapter }}</td>
+                                <td>{{ item.WarrantyStartDate }}</td>
+                                <td>{{ item.WarrantyEndDate }}</td> -->
+                                    <!-- <td>{{ item.Location }}</td> -->
+                                    <td>{{ item.location }}</td>
+                                    <td>   <input
+                                      type="text"
+                                      id="serviceTag_{{ i }}"
+                                      #newServiceTag
+                                    /></td>
+                                    <td><input type="button" value="Verify" (click)="verifyAsset(item,newServiceTag.value)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" (click)="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

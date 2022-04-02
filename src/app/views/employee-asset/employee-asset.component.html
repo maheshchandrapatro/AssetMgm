@@ -1,0 +1,154 @@
+<div class="container-fluid p-0">
+  <div class="d-block bg-dark d-flex justify-content-between">
+    <span class="d-block p-2 bg-dark text-white">Employee Detail</span>
+    <button class="col-sm-1 btn bg-dark text-white justify-content-end add-asset-btn" (click)="print()">
+      Print
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="card-header input-container" role="tab" id="emp">
+      <div class="row form-group">
+        <label class="col-sm-2 px-4" for="exampleInputEmail1">Employee Id :</label>
+        <div class="col-sm-3 text-left">
+          <input type="text" class="form-control" name="empid" id="empid" [(ngModel)]="employeeId" required
+            [ngClass]="{ danger: submitted && employeeId === null }" placeholder="Enter empid" />
+        </div>
+        <div class="col-sm-1 pull-right">
+          <button type="submit" id="clilck" class="btn bg-dark text-white btn-sm form-control"
+            (click)="getEmployeeDetails()">
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Employee Id :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">{{ employeeDetails?.id }}</div>
+          </div>
+        </div>
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Employee Name :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">{{ employeeDetails?.empName }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Reporting To :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">{{ employeeDetails?.reportingTo }}</div>
+          </div>
+        </div>
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Department :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">{{ employeeDetails?.unit }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Email :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">{{ employeeDetails?.userName }}</div>
+          </div>
+        </div>
+        <div class="col-sm-2 input-container">
+          <div class="input-group">
+            <label>Status :</label>
+          </div>
+        </div>
+        <div class="col-sm-4 input-container">
+          <div class="input-group">
+            <div class="emp-content">
+              {{ employeeDetails?.employmentStatus }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="table-responsive">
+      <span class="d-block p-2 bg-dark text-white">Manage Employee Assets</span>
+      <table id="assetTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtassetTable" width="98%"
+        class="row-border hover">
+        <thead style="text-align: center">
+          <tr>
+            <th>Select Asset(s)</th>
+            <th scope="col">Asset Type</th>
+            <th scope="col">Service Tag</th>
+            <th scope="col">Assignment Type</th>
+            <th scope="col">Cable</th>
+            <th scope="col">Desk ID</th>
+            <th scope="col">Location</th>
+            <th>Scanned Asset</th>
+            <th>Verify Asset</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of assetData; let i = index">
+            <td>
+              <input type="checkbox" (click)="getSelectedAsset($event,item)" />
+            </td>
+            <td>{{ item.assetType }}</td>
+            <td>{{ item.serviceTag }}</td>
+            <td>{{ item.assignmentType }}</td>
+            <td>{{ item.cableDetails }}</td>
+            <td>{{ item.deskId }}</td>
+            <td>{{ item.location }}</td>
+            <td>
+              <input type="text" id="serviceTag_{{ i }}" #newServiceTag />
+            </td>
+            <td>
+              <button type="submit" id="" value="Verify" class="btn bg-dark text-white btn-sm form-control"
+                (click)="verifyAsset(item,newServiceTag.value)">Verify
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-1" style="float:right;">
+      <button type="submit" id="clilck" class="btn bg-dark text-white btn-sm form-control" [disabled]="markAsWFO"
+        (click)="markAsWorkFromHome()">
+        Set to WFH Mode
+      </button>
+    </div>
+    <div class="col-sm-1" style="float:right;">
+      <button type="submit" id="clilck" class="btn bg-dark text-white btn-sm form-control" [disabled]="markAsWFH" (click)="markAsWorkFromOffice()">
+      Set to WFO Mode
+    </button>
+    </div>
+    <div class="col-sm-1" style="float:right;">
+      <button type="submit" id="clilck" class="btn bg-dark text-white btn-sm form-control"  [disabled]="resetAsset"(click)="resetAssets()">
+        Reset Asset
+      </button>
+    </div>
+</div>

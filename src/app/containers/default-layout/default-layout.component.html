@@ -1,0 +1,57 @@
+<!--sidebar-->
+<c-sidebar #sidebar="cSidebar" class="d-print-none sidebar sidebar-fixed" id="sidebar" visible>
+  <!-- <c-sidebar-brand
+[brandFull]="{
+  src: 'assets/img/brand/cgslogo.png',
+  width: 50,
+  alt: 'CGS Logo'
+}"
+[brandNarrow]="{
+  src: 'assets/img/brand/Assetmgmt.png',
+  height: 46,
+  alt: 'AssetMgmt'
+}"
+routerLink="./"
+> -->
+  <c-sidebar-brand [brandFull]="{
+      src: 'assets/img/brand/CGS_logo.png',
+      width: 150,
+      alt: 'CGS Logo'
+    }" routerLink="./" style="display: inline-block;">
+  </c-sidebar-brand>
+  <!-- <c-sidebar-brand
+  [brandFull]="{
+    src: 'assets/img/brand/Assetmgmt.png',
+    width: 50,
+    alt: 'CGS Logo'
+  }"
+  style="display: inline-block;"
+  routerLink="./"
+>
+</c-sidebar-brand> -->
+  <perfect-scrollbar [config]="perfectScrollbarConfig">
+    <!--  [perfectScrollbar]="perfectScrollbarConfig"-->
+    <c-sidebar-nav [navItems]="navItems">
+    </c-sidebar-nav>
+  </perfect-scrollbar>
+  <c-sidebar-toggler *ngIf="!sidebar.narrow" toggle="unfoldable" cSidebarToggle="sidebar"></c-sidebar-toggler>
+</c-sidebar>
+
+<!--main-->
+<div class="wrapper d-flex flex-column min-vh-100 bg-light dark:bg-transparent">
+
+  <ngx-loading-bar color="#123456" height="5px" ref="http"></ngx-loading-bar>
+
+  <!--app-header-->
+  <app-default-header class="d-print-none header header-sticky" position="sticky" sidebarId="sidebar">
+  </app-default-header>
+  <!--app-body-->
+
+  <div class="body flex-grow-1">
+    <div class="container-fluid p-0">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <!--app footer-->
+  <app-default-footer></app-default-footer>
+</div>

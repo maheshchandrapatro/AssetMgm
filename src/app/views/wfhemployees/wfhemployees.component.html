@@ -1,0 +1,87 @@
+<div *ngIf="isShowLoader" class="spinner">
+  <h5 class="alert-info">Please wait......</h5>
+</div>
+<!-- <label class="switch">
+  <input type="checkbox" [(ngModel)]="checked"
+  (change)="showSwitchbtn($event)">{{checked}}
+  <span class="slider round"></span>
+</label> -->
+<div class="container-fluid p-0">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-dark text-white">
+      <a class="nav-link text-white" routerLink="/admin/dashboard">Dashboard /</a>
+      <!-- Breadcrumb Menu-->
+      <li class="breadcrumb-menu">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+          <span *ngIf="workType === 'WFH'" class="d-block p-2 bg-dark text-white"> WFH Employees</span>
+          <span *ngIf="workType === 'WFO'" class="d-block p-2 bg-dark text-white"> WFO Employees</span>
+        </div>
+      </li>
+    </ol>
+  </nav>
+  <div *ngIf="workType=='WFH'">
+    <div class="column">
+      <ag-grid-angular style="width: 100%; height: 750px; font-size: 16px;" class="ag-theme-alpine"
+        [suppressDragLeaveHidesColumns]="true" [suppressMakeColumnVisibleAfterUnGroup]="true"
+        [rowGroupPanelShow]="rowGroupPanelShow" [pagination]="true" [paginationAutoPageSize]="true" [rowData]="rowData"
+        [rowHeight]="45" [columnDefs]="columnDefs" (rowClicked)="onRowClick($event)" (gridReady)="onGridReady($event)"
+        >
+      </ag-grid-angular>
+    </div>
+  </div>
+  <div *ngIf="workType=='WFO'">
+    <div class="column">
+      <ag-grid-angular style="width: 100%; height: 750px; font-size: 16px;" class="ag-theme-alpine"
+        [suppressDragLeaveHidesColumns]="true" [suppressMakeColumnVisibleAfterUnGroup]="true"
+        [rowGroupPanelShow]="rowGroupPanelShow" [pagination]="true" [paginationAutoPageSize]="true" [rowData]="wfoData"
+        [rowHeight]="45" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)"
+        >
+      </ag-grid-angular>
+    </div>
+  </div>
+</div>
+
+<!-- show asset popup -->
+<div class="modal" id="modalRegister" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyleee}">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content scrol">
+      <div class="modal-header bg-dark text-white">
+        <h4 class="modal-title">Employee Asset Details</h4>
+        <div class="col-sm-1 d-flex justify-content-end ">
+          <button type="button" class="close" (click)="closeModall()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table id="showassetTable" class="table-striped table-bordered" width="100%">
+            <thead style="text-align: center;">
+              <tr>
+                <th scope="col">Asset Type</th>
+                <th scope="col">Service Tag</th>
+                <th scope="col">Assignment Type</th>
+                <th scope="col">Desk ID</th>
+                <th scope="col">Location</th>
+                <th scope="col">Processor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of assetData; let i = index">
+                <td>{{ item.assetType }}</td>
+                <td>{{ item.serviceTag }}</td>
+                <td>{{ item.assignmentType }}</td>
+                <td>{{ item.deskId }}</td>
+                <td>{{ item.location }}</td>
+                <td>{{ item.processor}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" (click)="closeModall()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

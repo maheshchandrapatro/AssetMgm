@@ -1,0 +1,38 @@
+<div class="card">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <div class="card-body">
+    <div class="row">
+      <div *ngFor="let dsbwig of dtDashboardData" class="col-lg-3">
+        <div class="card-box" (click)="widgetClick(dsbwig)" [ngStyle]="{'backgroundColor': setUserColor(dsbwig.name)}">
+          <div class="inner">
+            <div class="row">
+              <div class="col-md-8">
+                <h4>{{dsbwig.name}}</h4>
+                <div>
+                  <span>
+                    <p
+                      *ngIf="(dsbwig.name !== 'WFH Employees' && dsbwig.name !== 'WFO Employees' && dsbwig.name !==  'Expire In 3Months' && dsbwig.name !==  'Assigned') && dsbwig.name !==  'Un Assigned'">
+                      Assigned : {{dsbwig.assigned}}</p>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <span style="text-align: end;">
+                  <p> Total : {{dsbwig.data}}</p>
+                </span>
+                <div>
+                  <span style="text-align: end;">
+                    <p
+                      *ngIf="(dsbwig.name !== 'WFH Employees' && dsbwig.name !== 'WFO Employees' && dsbwig.name !==  'Expire In 3Months' && dsbwig.name !==  'Assigned' && dsbwig.name !==  'Un Assigned')">
+                      Available : {{dsbwig.available}}</p>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

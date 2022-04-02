@@ -1,0 +1,177 @@
+<!-- <div class="card">
+  <h3 style="text-align: center">Aset Allocation Form</h3>
+  <div class="card-body">
+    <p>
+      <strong>Dear Mr/Ms.</strong>
+      <label type="text">{{ employeeName }}</label>
+      <label><strong>Emp ID:</strong> {{ employeeId }}</label>
+    </p>
+    <div class="card table-responsive">
+      <table id="assetallocTable" class="table table-striped" width="100%">
+        <thead style="text-align: center">
+          DETAILS OF ASSETS
+        </thead>
+        <tbody>
+          <tr>
+            <td>Desktop Make & Model No</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> -->
+
+<div class="d-block bg-dark d-flex justify-content-between">
+  <span class="d-block p-2 bg-dark text-white">Asset Allocation Details</span>
+  <button
+    class="col-sm-1 btn bg-dark text-white justify-content-end"
+    (click)="print()">
+  <span class="col-sm-1 justify-content-end"><img src="assets/img/print/printer.png" style="background-color: #fff; padding-top: 1px;" width="40px" height="23px"/></span>
+  </button>
+</div>
+<div  class="style">
+<div style="max-width: 971px;margin: auto;font-family: Arial, Helvetica, sans-serif;">
+
+  <header>
+      <img src="assets/img/print/Asset-Header.jpg" alt="header" width="100%" height="150px"/>
+  </header>
+  <div>
+      <!-- <table style="border:1px solid #000;border-collapse: collapse;text-align:center;">
+
+          <tbody>
+            <tr>
+                <th rowspan="2" style="width:80px;border-right:1px solid #000;">DATE</th>
+                <th colspan="2" style="width:20px;border-right:1px solid #000;border-bottom: 1px solid #000;">DD</th>
+                <th colspan="2" style="width:20px;border-right:1px solid #000;border-bottom: 1px solid #000;">MM</th>
+                <th colspan="4" style="width:50px;border-bottom: 1px solid #000;">YYYY</th>
+            </tr>
+            <tr>
+              <td colspan="8" style="border-right:1px solid #000;"> {{this.currentDate}}</td>
+            </tr>
+        </tbody>
+      </table> -->
+      <label><strong>DATE :</strong> {{this.currentDate}}</label>
+
+  </div>
+  <div>
+      <p style="color: #000; font-weight: bold;text-align: center;text-decoration: underline;">ASSET ALLOCATION FORM</p>
+  </div>
+  <div style="display: inline-block;width: 100%;">
+      <div style="font-weight: bold;color: #000;float: left;width: 80%;">Dear Mr/Ms.
+          <span style="border-bottom: 1px solid #000;width: 86%;display:inline-block;">{{ employeeName }}</span>
+      </div>
+      <div style="font-weight: bold;color: #000;float: left;width: 20%;">Emp ID:
+          <span style="border-bottom: 1px solid #000;width: 60%;display:inline-block;">{{ employeeId }}</span>.
+      </div>
+  </div>
+  <p style="color: #000;">You are being issued a below mentioned assets as tool to facilitate your work from home.</p>
+
+  <table style="border:1px solid #000;border-collapse: collapse; width: 100%;">
+      <thead>
+          <tr>
+              <th colspan="2" style="border-bottom: 1px solid #000;background: #777;color: #fff;line-height: 30px;">DETAILS OF ASSETS</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td style="border-right:1px solid #000;border-bottom: 1px solid #000;width: 50%;line-height: 26px;padding-left: 10px;">Desktop Make & Model No</td>
+              <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataDesktop?.model}}</td>
+          </tr>
+          <tr>
+              <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;padding-left: 10px;">Desktop S.No</td>
+              <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataDesktop?.serviceTag}}</td>
+          </tr>
+          <tr>
+            <td style="border-right:1px solid #000;border-bottom: 1px solid #000;width: 50%;line-height: 26px;padding-left: 10px;">Laptop Make & Model No</td>
+            <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataLaptop?.model}}</td>
+        </tr>
+        <tr>
+            <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;padding-left: 10px;">Laptop S.No</td>
+            <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataLaptop?.serviceTag}}</td>
+        </tr>
+          <tr>
+              <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;padding-left: 10px;">Monitor Make & Model No</td>
+              <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{ assetDataMonitor?.model }}</td>
+          </tr>
+          <tr>
+              <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;padding-left: 10px;">Monitor S.No</td>
+              <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataMonitor?.serviceTag}}</td>
+          </tr>
+          <tr>
+              <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;padding-left: 10px;">UPS Make & Model NO</td>
+              <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataUps?.model}}</td>
+          </tr>
+          <tr>
+              <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;padding-left: 10px;">UPS S.NO</td>
+              <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataUps?.serviceTag}}</td>
+          </tr>
+          <tr>
+              <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;padding-left: 10px;">Headset Make & Serial NO</td>
+              <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataHeadset?.serviceTag}}</td>
+          </tr>
+          <tr>
+              <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;padding-left: 10px;">Keyboard & Mouse</td>
+              <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataKeyboard?.serviceTag}} </td>
+          </tr>
+          <tr>
+            <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;padding-left: 10px;"> Mouse</td>
+            <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataMouse?.serviceTag}} </td>
+        </tr>
+        <tr>
+          <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;padding-left: 10px;"> Miscellaneous</td>
+          <td style="border-bottom: 1px solid #000;padding-left: 10px;">{{assetDataMiscellaneous?.serviceTag}} , {{assetDataMiscellaneous?.others}}, {{assetDataMiscellaneous?.productDescription}} </td>
+      </tr>
+          <tr>
+              <td style="border-right:1px solid #000;border-bottom: 1px solid #000;line-height: 26px;font-weight: bold;padding-left: 10px;">Approximate Assets value</td>
+              <td style="border-bottom: 1px solid #000;padding-left: 10px;"> &#8377; 50,000 /-</td>
+          </tr>
+          <tr>
+              <td style="border-right:1px solid #000;line-height: 26px;font-weight: bold;padding-left: 10px;">Asset Allocated by</td>
+              <td style="padding-left: 10px;"></td>
+          </tr>
+      </tbody>
+  </table>
+  <div style="margin-top: 10px;">
+      <strong>You further understand that:</strong>
+      <ul style="line-height: 26px;font-size: 14px;">
+          <li>You are responsible for the above issued to you and that you will care for the equipment in such a
+              manner as to prevent loss or damage.</li>
+          <li>The above issued assets are a work tool and should be brought back after completion of WFH.</li>
+          <li>The above-mentioned assets should be transported and stored carefully so it is not susceptible to
+              damage.</li>
+          <li>You may not make any permanent personally identifying marks on the above assets including adhesive
+              labels/stickers.</li>
+          <li>The above assets should never leave unattended after office hours, weekends, holidays, etc.</li>
+          <li>The above assets should not be left unattended in any public area.</li>
+          <li>In the case of any damages or abuse of the above assets, or because of your failure to follow company
+              technology acceptable use policies, including this agreement, you will be held for damage and above-mentioned
+              asset value will be deducted from your salary and if any recovered from you.</li>
+      </ul>
+  </div>
+  <p style="line-height: 30px;font-size: 14px;margin-bottom: 8px;">
+      Regards,<br/>
+      For <strong>Computer Generated Solutions India Pvt. Ltd.</strong>
+  </p>
+  <p>I accept and agree to the above terms & conditions:</p>
+  <div style="display: inline-block;width: 100%;margin-bottom: 8px;">
+      <div style="font-weight: bold;color: #000;float: left;width: 100%;">Signature of Employee:
+          <span style="border-bottom: 1px solid #000;width: 40%;display:inline-block;">&nbsp;</span>.
+      </div>
+  </div>
+  <div style="display: inline-block;width: 100%;margin-bottom: 8px;">
+      <div style="font-weight: bold;color: #000;float: left;width: 100%;">Address of Employee:
+          <span style="border-bottom: 1px solid #000;width: 70%;display:inline-block;">&nbsp;</span>.
+      </div>
+  </div>
+  <div style="display: inline-block;width: 100%;margin-bottom: 7px;">
+      <div style="color: #000;float: left;width: 100%;">Mobile Number of Employee:
+          <span style="border-bottom: 1px solid #000;width: 40%;display:inline-block;">&nbsp;</span>.
+      </div>
+  </div>
+  <footer>
+      <img src="assets/img/print/Asset-Footer.jpg" alt="header" />
+  </footer>
+</div>
+
+</div>

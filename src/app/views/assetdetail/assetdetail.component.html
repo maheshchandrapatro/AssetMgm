@@ -1,0 +1,47 @@
+<!-- All Asset Data -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb bg-dark text-white">
+    <a class="nav-link text-white" routerLink="/admin/dashboard">Dashboard /</a>
+    <!-- Breadcrumb Menu-->
+    <li class="breadcrumb-menu">
+      <div class="btn-group textmar" role="group" aria-label="Button group with nested dropdown">
+        <span class="d-block bg-dark text-white">
+          {{assetName}} Asset Details</span>
+      </div>
+    </li>
+  </ol>
+</nav>
+<div class="column"
+  *ngIf="(assetName !==  'Expire In 3Months' && assetName !==  'Assigned') && assetName !==  'Un Assigned'">
+  <ag-grid-angular style="width: 100%; height: 750px; font-size: 16px;" class="ag-theme-alpine"
+    [suppressDragLeaveHidesColumns]="true" [suppressMakeColumnVisibleAfterUnGroup]="true" [pagination]="true"
+    [paginationAutoPageSize]="true" [rowData]="assetData" [rowHeight]="45" [columnDefs]="columnDef">
+  </ag-grid-angular>
+</div>
+<!-- Assigned Asset -->
+<div *ngIf="assetName=='Assigned'">
+  <div class="column">
+    <ag-grid-angular style="width: 100%; height: 750px; font-size: 16px;" class="ag-theme-alpine"
+      [suppressDragLeaveHidesColumns]="true" [suppressMakeColumnVisibleAfterUnGroup]="true" [pagination]="true"
+      [paginationAutoPageSize]="true" [rowData]="assignedData" [rowHeight]="45" [columnDefs]="columnDefs">
+    </ag-grid-angular>
+  </div>
+</div>
+<!-- Un Assigned Asset -->
+<div *ngIf="assetName=='Un Assigned'">
+  <div class="column">
+    <ag-grid-angular style="width: 100%; height: 750px; font-size: 16px;" class="ag-theme-alpine"
+      [suppressDragLeaveHidesColumns]="true" [suppressMakeColumnVisibleAfterUnGroup]="true" [pagination]="true"
+      [paginationAutoPageSize]="true" [rowData]="unassignedData" [rowHeight]="45" [columnDefs]="columnDefs">
+    </ag-grid-angular>
+  </div>
+</div>
+<!-- Expire in 3months -->
+<div *ngIf="assetName=='Expire In 3Months'">
+  <div class="column">
+    <ag-grid-angular style="width: 100%; height: 750px; font-size: 16px;" class="ag-theme-alpine"
+      [suppressDragLeaveHidesColumns]="true" [suppressMakeColumnVisibleAfterUnGroup]="true" [pagination]="true"
+      [paginationAutoPageSize]="true" [rowData]="expiredData" [rowHeight]="45" [columnDefs]="columnDefs">
+    </ag-grid-angular>
+  </div>
+</div>

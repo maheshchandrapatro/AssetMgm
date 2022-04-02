@@ -1,0 +1,175 @@
+/* You can add global styles to this file, and also import other style files */
+// If you want to override variables do it here
+@import "variables";
+
+$enable-ltr: true;
+$enable-rtl: true;
+
+// Import styles with default layout.
+@import "~@coreui/coreui/scss/coreui";
+
+// Import Chart.js custom tooltips styles
+@import "~@coreui/chartjs/scss/coreui-chartjs";
+
+// perfect scrollbar theming for use with [perfectScrollbar] directive
+//@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+@import "layout";
+
+// Some temp fixes
+@import "fixes";
+
+// Prism.js
+@import "examples";
+
+// If you want to add something do it here
+@import "custom";
+// #DataTables_Table_0_length{
+//     margin-top: 10px;
+//     margin-bottom: 10px;
+// }
+@import "ag-grid-community/dist/styles/ag-grid.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+// .ag-theme-alpine .ag-header {
+//   /* use theme parameters where possible */
+//   --ag-foreground-color: deeppink;
+// }
+.ag-theme-alpine .ag-header {
+  text-style: italic;
+}
+.ag-theme-alpine .ag-header-cell-label {
+  font-style: italic;
+}
+.ag-header-cell {
+  background-color: ag-param(foreground-color);
+  color: ag-param(background-color);
+}
+
+element.style {
+}
+.ag-theme-alpine [class^=ag-], .ag-theme-alpine [class^=ag-]:focus, .ag-theme-alpine [class^=ag-]:after, .ag-theme-alpine [class^=ag-]:before {
+    box-sizing: border-box;
+    outline: none;
+}
+.ag-cell-value, .ag-group-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+.ag-theme-alpine .ag-cell, .ag-theme-alpine .ag-full-width-row .ag-cell-wrapper.ag-row-group {
+    border: 1px solid transparent;
+    line-height: 40px;
+    padding-left: 17px;
+    padding-right: 17px;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+.ag-cell {
+    cursor: pointer;
+}
+
+.dataTables_filter{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 7px;
+}
+.dataTables_length{
+    margin-top: 10px;
+    margin-left: 7px;
+}
+
+.sidebar-brand a{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding-top: 7px;
+}
+
+.modal-body.modal-open .container{
+    -webkit-filter: blur(4px);
+    -moz-filter: blur(4px);
+    -o-filter: blur(4px);
+    -ms-filter: blur(4px);
+    filter: blur(4px);
+  }
+
+  table.dataTable thead .sorting_desc,
+  table.dataTable thead .sorting{
+    background: #3d4a5e !important  ;
+    font-size: 14px;
+    padding-left: 5px;
+    color: #fff;
+    border-right: 1px solid #58667a;
+    font-weight: normal;
+    min-width: 120px;
+  }
+
+  table.dataTable>thead .sorting:before, table.dataTable>thead .sorting:after
+  {
+    font-size: 18px;
+  }
+
+  table.dataTable thead th, table.dataTable thead td{
+      border-color: #ccc;
+  }
+
+  .dataTables_wrapper{
+      padding: 5px;
+  }
+
+//   table design css here
+table.dataTable tbody th, table.dataTable tbody td,
+table.dataTable thead th, table.dataTable thead td{
+    border: 0px;
+}
+table.dataTable tbody th, table.dataTable tbody td{
+    border-right: 1px solid #ddd;
+}
+
+table.dataTable thead th, table.dataTable thead td{
+    &:first-child{
+        border-top-left-radius: 5px;
+    }
+    &:last-child{
+        border-top-right-radius: 5px;
+    }
+}
+
+table.dataTable.no-footer{
+    border-color: #ddd;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+    background: #4f5d73;
+    border-color: #4f5d73;
+}
+
+.form-select:focus, .form-control:focus{
+    border-color: #4f5d73;
+  }
+
+  .modal-header{
+      padding: 0.5rem 1rem;
+  }
+  .modal-body .card-body{
+      padding: 0;
+  }
+
+  .modal-header .close{
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    padding: 0px;
+    vertical-align: middle;
+  }
+
+.spinner{
+    text-align: center;
+    padding-top: calc(100vh / 2);
+     height: 100vh
+}
+.modal-title{
+  font-size: 20px;
+}
